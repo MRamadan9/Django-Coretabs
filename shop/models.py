@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from django.utils import timezone
 from django.template.defaultfilters import slugify
@@ -13,6 +14,7 @@ class Product(models.Model):
 	description = models.TextField(blank=True)
 	slug = models.SlugField(unique=True, blank=True)
 	category = models.ForeignKey("Category", related_name='products', on_delete=models.CASCADE)
+	ordering_users = models.ManyToManyField(User, through='orders.Order', related_name='ordered_products')
 
 
 	def __str__(self):
